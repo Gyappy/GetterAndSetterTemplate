@@ -1,0 +1,38 @@
+#if($field.type=="byte" || $field.type=="short" || $field.type=="int" || $field.type=="long" || $field.type=="float" || $field.type=="double" || $field.type=="char" || $field.type=="boolean")
+#set($IS_BASIS_TYPE=true)
+#end
+#set($paramName = $helper.getParamName($field, $project))
+public ##
+#if($field.modifierStatic)
+  static ##
+#end
+void set$StringUtil.capitalizeWithJavaBeanConvention($StringUtil.sanitizeJavaIdentifier($helper.getPropertyName($field, $project)))($field.type $paramName) {
+  #set($littleTail="==null?")
+  #set($prefix="")
+  #set($defaultList="ArrayList<>()")
+  #set($defaultMap="HashMap<>()")
+  #if ($field.name == $paramName)
+    #if (!$field.modifierStatic)
+      #set($prefix="this.")
+    #else
+      #set($prefix="${classname}.")
+    #end
+  #end
+  #if($field.string)
+    $prefix$field.name = $paramName$littleTail$prefix$field.name="":$paramName;
+  #else
+    #if($IS_BASIS_TYPE)
+      $prefix$field.name = $paramName;
+    #else
+      #if($StringUtil.containsIgnoreCase($field.type,"java.util.List"))
+        $prefix$field.name = $paramName$littleTail$prefix$field.name=new ${defaultList}:$paramName;
+      #else
+        #if($StringUtil.containsIgnoreCase($field.type,"java.util.Map"))
+          $prefix$field.name = $paramName$littleTail$prefix$field.name=new ${defaultMap}:$paramName;
+        #else
+          $prefix$field.name = $paramName$littleTail$prefix$field.name=new ${field.type}():$paramName;
+        #end
+      #end
+    #end
+  #end
+}
