@@ -1,6 +1,6 @@
 # GetterAndSetterTemplate
   to complete DTO by automation to prevent from npe, unnecessary object and so on
-  (调研时一些同事建议去掉setter模板，接口DTO对setter的使用很少，考虑到一些本地JavaBean的场景可能使用到，所以也提供出来按需配置，源码于附件中附上)
+  (调研时一些同事建议去掉setter模板，接口DTO对setter的使用很少，考虑到一些本地JavaBean的场景可能使用到，所以也提供出来按需配置)
 ###意义
   * 调研的时候发现一些团队的开发不太注意成员变量的访问权限,这样需要在业务逻辑代码中加入很多保护性代码,用这种模板+注解的方式可以把这些保护性代码收敛到DTO中。
   * 在字段数量较多的情况一个DTO粗略估算平均耗时3~5分钟，机械性的操作也容易出错(比如用复制粘贴的方式拷贝函数然后改函数名和返回的变量名，忘记改就会返回不该返回的变量,极大增加调试成本)。
